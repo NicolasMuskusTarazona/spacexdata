@@ -32,6 +32,23 @@ let filtrarTipos = async() => {
 }
 await filtrarTipos()
 
+let weightsNames = async() => {
+    const url = "https://api.spacexdata.com/v3/rockets"
+    const config = {
+        method: "GET",
+    }
+    const response = await fetch(url,config)
+    let data =await response.json()
+    let nombresotes = data.filter(nombres =>{
+        nombres.payload_weights.forEach(nombresitos => {
+            console.log(`Pesos de carga util Nombres: ${nombresitos.name}`)
+        });
+    })
+    return nombresotes
+}
+
+await weightsNames()
+
 // Filtra Raptor pero lo hace de una distinta mas compleja
 // el filtrar2 junto al if lo subi y lo agrege al return
 
