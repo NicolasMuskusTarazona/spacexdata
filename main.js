@@ -46,9 +46,21 @@ let weightsNames = async() => {
     })
     return nombresotes
 }
-
 await weightsNames()
-
+let costPerLaunch = async() => {
+    const url = "https://api.spacexdata.com/v3/rockets"
+    const config = {
+        method: "GET",
+    }
+    const response = await fetch(url,config)
+    let data =await response.json()
+    let costoLanzamiento = data.filter(costo =>{
+        let numero1 = costo.id == 1 && console.log(costo.cost_per_launch)
+        let numero2 = costo.id == 2 && console.log(costo.cost_per_launch)
+    })
+    return costoLanzamiento
+}
+await costPerLaunch()
 // Filtra Raptor pero lo hace de una distinta mas compleja
 // el filtrar2 junto al if lo subi y lo agrege al return
 
