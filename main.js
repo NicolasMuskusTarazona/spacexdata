@@ -33,7 +33,35 @@ let filtrarTipos = async () => {
     return filtrar, filtrar2
 }
 await filtrarTipos()
+// Filtra Raptor pero lo hace de una distinta mas compleja
+// el filtrar2 junto al if lo subi y lo agrege al return
+
+// let tipo2 = async() => {
+//     const url = "https://api.spacexdata.com/v3/rockets"
+//     const config = {
+//         method: "GET",
+//     }
+//     const response = await fetch(url,config)
+//     let data = await response.json()
+//     let filtrar2 = data.filter(filtrarRaptor =>{
+//         if(filtrarRaptor.engines.type === "raptor")
+//         console.log(`Numero motor: ${filtrarRaptor.engines.number} Tipo: ${filtrarRaptor.engines.type}`)
+//     })
+//     return filtrar2
+// }
+// await tipo2()
+
 // 3. Obtener solo los `name` de `payload_weights`
+// [
+// ]
+// "payload_weights": [
+//     {
+//       "id": "leo",
+//       "name": "Low Earth Orbit",
+//       "kg": 450,
+//       "lb": 992
+//     }
+//   ]
 let weightsNames = async () => {
     const url = "https://api.spacexdata.com/v3/rockets"
     const config = {
@@ -58,25 +86,30 @@ let costPerLaunch = async () => {
     }
     const response = await fetch(url, config)
     let data = await response.json()
-    let costoLanzamiento = data.reduce((sum,value) => (sum + value.cost_per_launch), 0)
+    let costoLanzamiento = data.reduce((sum, value) => (sum + value.cost_per_launch), 0)
     console.log(`Total costo por lanzamiento: ${costoLanzamiento} $`)
     return costoLanzamiento
 }
 await costPerLaunch()
-// Filtra Raptor pero lo hace de una distinta mas compleja
-// el filtrar2 junto al if lo subi y lo agrege al return
 
-// let tipo2 = async() => {
-//     const url = "https://api.spacexdata.com/v3/rockets"
-//     const config = {
-//         method: "GET",
-//     }
-//     const response = await fetch(url,config)
-//     let data = await response.json()
-//     let filtrar2 = data.filter(filtrarRaptor =>{
-//         if(filtrarRaptor.engines.type === "raptor")
-//         console.log(`Numero motor: ${filtrarRaptor.engines.number} Tipo: ${filtrarRaptor.engines.type}`)
-//     })
-//     return filtrar2
+
+// 5. Calcular el rocket más liviano omitiendo su peso con carga
+// {
 // }
-// await tipo2()
+// "mass": {
+//     "kg": 30146,
+//     "lb": 66460
+//   },
+let RocketLiviano = async () => {
+    const url = "https://api.spacexdata.com/v3/rockets"
+    const config = {
+        method: "GET",
+    }
+    const response = await fetch(url, config)
+    let data = await response.json()
+    let Liviano = data.reduce((comparar, value) =>
+        (value.mass.kg < comparar.mass.kg ? value : comparar), data[0]);
+    console.log(`El cohete más liviano es: ${Liviano.rocket_name} con ${Liviano.mass.kg} kg`);
+    return Liviano
+}
+await RocketLiviano()
