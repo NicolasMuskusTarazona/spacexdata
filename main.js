@@ -110,7 +110,7 @@ let RocketLiviano = async () => {
     let data = await response.json()
     let Liviano = data.reduce((comparar, value) =>
         (value.mass.kg < comparar.mass.kg ? value : comparar), data[0]);
-    console.log(`El cohete mas liviano es: ${Liviano.rocket_name} con ${Liviano.mass.kg} kg`);
+    console.log(`El rocket mas liviano es: ${Liviano.rocket_name} con ${Liviano.mass.kg} kg`);
     return Liviano
 }
 await RocketLiviano()
@@ -125,7 +125,22 @@ let RocketPesado = async () => {
     let data = await response.json()
     let Pesado = data.reduce((comparar, value) =>
         (value.mass.kg > comparar.mass.kg ? value : comparar), data[0]);
-    console.log(`El cohete mas pesado es: ${Pesado.rocket_name} con ${Pesado.mass.kg} kg`);
+    console.log(`El rocket mas pesado es: ${Pesado.rocket_name} con ${Pesado.mass.kg} kg`);
     return Pesado
 }
 await RocketPesado()
+
+let Listado_imagenes = async () => {
+    const url = "https://api.spacexdata.com/v3/rockets"
+    const config = {
+        method: "GET",
+    }
+    const response = await fetch (url, config)
+    let data = await response.json()
+    let Listado = data.filter (imagenes =>{
+        console.log(`Nombre: ${imagenes.rocket_name}`)
+        console.table(imagenes.flickr_images)
+    })
+    return Listado 
+}
+await Listado_imagenes()
