@@ -144,3 +144,17 @@ let Listado_imagenes = async () => {
     return Listado 
 }
 await Listado_imagenes()
+
+let permiteperderMasMotores = async () => {
+    const url = "https://api.spacexdata.com/v3/rockets"
+    const config = {
+        method: "GET",
+    }
+    const response = await fetch(url, config)
+    let data = await response.json()
+    let motores = data.reduce((comparar, value) =>
+        (value.engines.engine_loss_max > comparar.engines.engine_loss_max? value : comparar), data[0]);
+    console.log(`El rocket mas pesado es: ${motores.rocket_name} con ${motores.engines.engine_loss_max}`);
+    return motores
+}
+await permiteperderMasMotores()
