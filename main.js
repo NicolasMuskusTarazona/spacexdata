@@ -181,3 +181,20 @@ let obtenerInformarcion = async() => {
 }
 
 await obtenerInformarcion()
+
+// 10. Obtener los distintos materiales `landing_legs`
+
+let obtenerMateriales = async() => {
+    const url = "https://api.spacexdata.com/v3/rockets"
+    const config = {
+        method: "GET",
+    }
+    const response = await fetch (url,config)
+    let data = await response.json()
+    let materiales = data.filter ( materials =>{
+        console.log(`Numero: ${materials.landing_legs.number} Material: ${materials.landing_legs.material}`)
+    })
+    return materiales
+}   
+
+await obtenerMateriales()
