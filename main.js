@@ -94,6 +94,7 @@ await costPerLaunch()
 
 
 // 5. Calcular el rocket más liviano omitiendo su peso con carga
+// No se puede usar el for each cuando no hay nada dentro del array
 // {
 // }
 // "mass": {
@@ -109,7 +110,22 @@ let RocketLiviano = async () => {
     let data = await response.json()
     let Liviano = data.reduce((comparar, value) =>
         (value.mass.kg < comparar.mass.kg ? value : comparar), data[0]);
-    console.log(`El cohete más liviano es: ${Liviano.rocket_name} con ${Liviano.mass.kg} kg`);
+    console.log(`El cohete mas liviano es: ${Liviano.rocket_name} con ${Liviano.mass.kg} kg`);
     return Liviano
 }
 await RocketLiviano()
+
+
+let RocketPesado = async () => {
+    const url = "https://api.spacexdata.com/v3/rockets"
+    const config = {
+        method: "GET",
+    }
+    const response = await fetch(url, config)
+    let data = await response.json()
+    let Pesado = data.reduce((comparar, value) =>
+        (value.mass.kg > comparar.mass.kg ? value : comparar), data[0]);
+    console.log(`El cohete mas pesado es: ${Pesado.rocket_name} con ${Pesado.mass.kg} kg`);
+    return Pesado
+}
+await RocketPesado()
