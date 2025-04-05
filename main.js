@@ -115,6 +115,7 @@ let RocketLiviano = async () => {
 }
 await RocketLiviano()
 
+// 6.Calcular el rocket más pesado omitiendo su peso con carga
 
 let RocketPesado = async () => {
     const url = "https://api.spacexdata.com/v3/rockets"
@@ -129,6 +130,8 @@ let RocketPesado = async () => {
     return Pesado
 }
 await RocketPesado()
+
+// 7. Obtener un listado de todas las fotos de `flickr_images`
 
 let Listado_imagenes = async () => {
     const url = "https://api.spacexdata.com/v3/rockets"
@@ -145,6 +148,8 @@ let Listado_imagenes = async () => {
 }
 await Listado_imagenes()
 
+// 8. Obtener el `rocket_name` que permita perder más motores (`engine_loss_max`)
+
 let permiteperderMasMotores = async () => {
     const url = "https://api.spacexdata.com/v3/rockets"
     const config = {
@@ -158,3 +163,21 @@ let permiteperderMasMotores = async () => {
     return motores
 }
 await permiteperderMasMotores()
+
+// 9. Obtener los rockets(`id`,`rocket_id`,`rocket_name`,`active`, `first_flight`,`country`) 
+// ordenados por el más alto al más bajo
+
+let obtenerInformarcion = async() => {
+    const url = "https://api.spacexdata.com/v3/rockets"
+    const config = {
+        method: "GET",
+    }
+    const response = await fetch (url,config)
+    let data = await response.json()
+    let informacion = data.filter ( info =>{
+        console.log(`ID:${info.id} Rocket ID: ${info.rocket_id} Rocket Name: ${info.rocket_name} Active: ${info.active} Primer vuelo: ${info.first_flight} Pais: ${info.country}`)
+    })
+    return informacion
+}
+
+await obtenerInformarcion()
