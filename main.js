@@ -198,3 +198,20 @@ let obtenerMateriales = async() => {
 }   
 
 await obtenerMateriales()
+
+// 11. Obtener los distintos tipos de propulsores `propellant_1` y `propellant_2`
+
+let obtenerPropulsores = async() => {
+    const url = "https://api.spacexdata.com/v3/rockets"
+    const config = {
+        method: "GET",
+    }
+    const response = await fetch (url,config)
+    let data = await response.json()
+    let propulsores = data.filter ( propellant =>{
+        console.log(`Numero motor : ${propellant.engines.number} Propulsor 1: ${propellant.engines.propellant_1} Propulsor 2:${propellant.engines.propellant_2} `)
+    })
+    return propulsores
+}   
+
+await obtenerPropulsores()
